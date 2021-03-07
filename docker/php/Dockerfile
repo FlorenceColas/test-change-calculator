@@ -1,10 +1,9 @@
 FROM php:7.4-fpm-alpine
 
-RUN apk add --update --no-cache unzip curl git wget make jq bash bash-completion openssl grep nano yarn \
-    && wget -q -O /usr/local/bin/install-php-extensions https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions \
-        || (echo "Failed while downloading php extension installer!"; exit 1) \
-    && chmod uga+x /usr/local/bin/install-php-extensions && sync && install-php-extensions \
-        xdebug
+RUN apk add --update --no-cache unzip curl git wget make jq bash bash-completion openssl grep nano yarn
+
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+RUN install-php-extensions gd
 
 WORKDIR /var/www/html
 
