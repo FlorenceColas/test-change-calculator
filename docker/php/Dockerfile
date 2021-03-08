@@ -1,9 +1,8 @@
 FROM php:7.4-fpm-alpine
 
 RUN apk add --update --no-cache unzip curl git wget make jq bash bash-completion openssl grep nano yarn
-
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
-RUN install-php-extensions gd
+RUN chmod uga+x /usr/local/bin/install-php-extensions && sync && install-php-extensions
 
 WORKDIR /var/www/html
 
