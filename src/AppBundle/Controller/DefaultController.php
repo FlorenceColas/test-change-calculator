@@ -6,6 +6,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Registry\CalculatorRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -30,8 +31,8 @@ class DefaultController extends Controller
         $change = $calculator->getChange($amount);
 
         return $change
-            ? new Response(
-                json_encode($change),
+            ? new JsonResponse(
+                $change,
                 200, //possible change
                 ['Content-Type' => 'application/json']
             )

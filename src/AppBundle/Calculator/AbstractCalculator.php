@@ -36,7 +36,7 @@ abstract class AbstractCalculator
         if (0 < $rest) {
             $index = count($this->currencies) - 1;
 
-            while (0 <= $index) {
+            while (0 <= $index and 0 < $rest) {
                 $currency = $this->currencies[$index];
 
                 if (!empty($result[$currency])) {
@@ -45,7 +45,11 @@ abstract class AbstractCalculator
 
                     $rest = $this->greedyAlgorithm($rest, $index + 1, $result);
 
-                    break;
+                    if (0 === $rest) {
+                        break;
+                    }
+
+                    $index = count($this->currencies) - 1;
                 } else {
                     $index--;
                 }
